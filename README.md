@@ -1,5 +1,6 @@
-
 ### How to Use this Templating Program
+
+First, clone this repo with `git clone https://github.com/Noxsios/Simple-Network-Template.git `
 
 1. Create a `template` config file
    
