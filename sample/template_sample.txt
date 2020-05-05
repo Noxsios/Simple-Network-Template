@@ -1,0 +1,5 @@
+config t
+
+hostname [[HOSTNAME]]
+int vlan 1
+ip add [[VLAN1IP]] [[VLAN1MASK]]
