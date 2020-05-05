@@ -3,11 +3,13 @@
 
 1. Create a `template` config file
    
-    a. Encapsulate the data you want to replace in double square brackets, [[LIKE SO]], a sample template is provided in the sample folder
+    a. Encapsulate the data you want to replace in double square brackets, [[LIKE SO]], a sample template is provided : [template_sample.txt](https://github.com/Noxsios/Simple-Network-Template/blob/master/sample/template_sample.txt)
 
 2. Create a `variables.csv` file in the same folder as your `template` file.
 
 > It **must** be called `variables.csv`
+>
+> The *A1* entry **must** be `WORD`, view [variables.csv](https://github.com/Noxsios/Simple-Network-Template/blob/master/sample/variables.csv) for an example
 
 3. Take that same placeholder name, and without the square brackets place it in *Column A* of the csv spreadsheet.
    
