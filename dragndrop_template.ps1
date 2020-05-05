@@ -161,3 +161,11 @@ function dragndrop_template {
 }
 
 dragndrop_template
+
+<#
+Drag n Drop GUI derived from :
+
+https://github.com/rlv-dan/Tutorial-code/blob/master/A%20drag-and-drop%20GUI%20made%20with%20PowerShell/powershell-gui.ps1
+
+Find and Replace CSV functions made entirely by me!
+#>
