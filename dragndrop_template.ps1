@@ -88,14 +88,12 @@ function main {
                     $meta = Import-Csv ($folder + "\variables.csv")
 
                     for ($i = 0; $i -lt $meta.Count; $i++) {
-
                         $meta_row = $meta[$i]
                         $meta_col = $titles[$k]
-                        $tag_WORD = "[[" + $meta.WORD[$i] + "]]"
+                        $tag_WORD = "{{" + $meta.WORD[$i] + "}}"
                         Write-Host ("Replace $tag_WORD in") $titles[$k] "with" $meta_row.$meta_col "."
             
-                        ((Get-Content -path $configfile) -replace [RegEx]::Escape("[[" + $meta_row.WORD + "]]"), ($meta_row.$meta_col) ) | Set-Content -Path $configfile
-                        
+                        ((Get-Content -path $configfile) -replace [RegEx]::Escape("{{" + $meta_row.WORD + "}}"), ($meta_row.$meta_col) ) | Set-Content -Path $configfile
                     }
 
                     Write-Host '------'
