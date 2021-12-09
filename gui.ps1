@@ -63,28 +63,26 @@ function main {
     # "START" button click event
     $button_Click = {
         foreach ($item in $listBox.Items) {
-            $file = Get-Item -LiteralPath $item
-            $folder = ($file).Directory.FullName
-            # Write-Host $folder
+            $templatefile = Get-Item -LiteralPath $item
+            $folder = ($templatefile).Directory.FullName
 
-            if ($file -is [System.IO.DirectoryInfo]) {
+            if ($templatefile -is [System.IO.DirectoryInfo]) {
                 Write-Host ("ERROR: DIRECTORY PROVIDED")
             }
             else {
-                # $configfile = $folder + "\" + $i.BaseName + $i.Extension
-                # Write-Host $configfile
                 $titles = ((Get-Content ($folder + "\variables.csv"))[0] -split ',')
                 # ignore the first element, which is always VARIABLES
+                # all other elements are the device names
                 $titles = $titles[1..$titles.Length]
 
                 Write-Host "------"
 
                 for ($k = 0; $k -lt $titles.Length; $k++) {
-                    $configfile = $folder + "\" + $file.BaseName + "_config_" + $titles[$k] + $file.Extension
-                    #Write-Host $titles[$k]
-                    Copy-Item -Path $file -Destination $configfile -Force
-                    #Write-Host $configfile
+                    # build the config file for each device in the first row of variables.csv
+                    $configfile = $folder + "\" + $templatefile.BaseName + "_config_" + $titles[$k] + $templatefile.Extension
+                    Copy-Item -Path $templatefile -Destination $configfile -Force
                     
+                    # grab the metadata variables
                     $meta = Import-Csv ($folder + "\variables.csv")
 
                     for ($i = 0; $i -lt $meta.Count; $i++) {
@@ -93,7 +91,7 @@ function main {
                         $tag = "{{" + $meta.VARIABLES[$i] + "}}"
                         Write-Host ("Replace $tag in") $titles[$k] "with" $row.$col "."
             
-                        ((Get-Content -Path $configfile) -replace [RegEx]::Escape("{{" + $meta.VARIABLES + "}}"), ($meta.$col) ) | Set-Content -Path $configfile
+                        ((Get-Content -Path $configfile) -replace [RegEx]::Escape("{{" + $row.VARIABLES + "}}"), ($meta.$col) ) | Set-Content -Path $configfile
                     }
 
                     Write-Host "------"
