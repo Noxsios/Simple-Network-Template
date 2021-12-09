@@ -1,39 +1,55 @@
-### How to Use this Templating Program
+# Simple Network Templating
 
-First, clone this repo with `git clone https://github.com/Noxsios/Simple-Network-Template.git `
+> sample `variables.csv` and `template.txt` located in [sample](./sample)
 
-1. Create a `template` config file
+1. Create a templates folder, ie `$HOME/network-templates`
+
+1. Create a `template.txt` config file, (file extension does not matter, as long as it is a plaintext file)
    
-    a. Encapsulate the data you want to replace in double square brackets, [[LIKE SO]], a sample template is provided : [template_sample.txt](https://github.com/Noxsios/Simple-Network-Template/blob/master/sample/template_sample.txt)
+    a. Encapsulate the data you want to replace in double curly braces, __{{LIKE SO}}__
+
+    ```txt
+    ! example template
+
+    config t
+
+    hostname {{HOSTNAME}}
+    int vlan 1
+    ip add {{VLAN1IP}} {{VLAN1MASK}}
+    ```
 
 2. Create a `variables.csv` file in the same folder as your `template` file.
 
 > It **must** be called `variables.csv`
 >
-> The *A1* entry **must** be `WORD`, view [variables.csv](https://github.com/Noxsios/Simple-Network-Template/blob/master/sample/variables.csv) for an example
+> The *A1* entry **must** be `VARIABLES`
 
-3. Take that same placeholder name, and without the square brackets place it in *Column A* of the csv spreadsheet.
-   
-    a. Immediately to the right of that, in *Column B*, type what to replace that value with.
-    
-    b. Use *Columns C+* for different variants of the information from *Column B*.
+ex. variables.csv
 
-    b. To reiterate, the value(s) in *Column B+* will replace the value of *Column A* in the final config file(s).
+| VARIABLES | DEVICE1       | DEVICE2       |
+| --------- | ------------- | ------------- |
+| HOSTNAME  | router1       | router2       |
+| VLAN1IP   | 192.168.0.1   | 192.168.1.1   |
+| VLAN1MASK | 255.255.255.0 | 255.255.255.0 |
 
-4. **Double Click** to run the `engine.bat` file
+1. Clone this repo, and run the gui
 
-> If nothing happens, right click on `dragndrop_template.ps1`, and respond **A** for **[YES TO ALL]** to the execution policy popup.
->
-> If the script is blocked due to downloading from a web source, 
+    ```powershell
+    git clone https://github.com/Noxsios/Simple-Network-Template.git
 
-1. Drag and Drop your template text file into the empty window, then click **START**.
+    cd Simple-Network-Template
 
-2. Your new file(s) with name ending in `_config` and your *Column Headers* will be generated in your config template's folder.
+    & .\gui.ps1
+    ```
 
-3. To make more copies, copy the values in *Column B* into *Columns C+* and rerun.
+2. Drag and drop your template text file into the empty window, then click __START__.
 
-> The data in **Row 1** of each *Column* (the *Column Header*) is added to the end of the generated config file,
-> 
-> So make sure you have a name for each column aside from the first, otherwise the script will fail 
+3. Your template will be applied to the devices listed in the variables file.  The files ending in `_config` are the generated config files. 
 
-8. To overwrite your changes, simply rerun with different values in your `variables.csv`.
+4. To overwrite your changes, simply rerun with different values in your `variables.csv`.
+
+---
+
+## Credits
+
+Drag n Drop GUI derived from : [this](https://github.com/rlv-dan/Tutorial-code/blob/master/A%20drag-and-drop%20GUI%20made%20with%20PowerShell/powershell-gui.ps1)
