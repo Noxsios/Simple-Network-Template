@@ -70,6 +70,8 @@ function main {
                 Write-Host ("ERROR: DIRECTORY PROVIDED")
             }
             else {
+                New-Item -Path $folder + "\configs" -ItemType Directory -Force -ErrorAction SilentlyContinue | Out-Null
+
                 $titles = ((Get-Content ($folder + "\variables.csv"))[0] -split ',')
                 # ignore the first element, which is always VARIABLES
                 # all other elements are the device names
@@ -79,7 +81,7 @@ function main {
 
                 for ($k = 0; $k -lt $titles.Length; $k++) {
                     # build the config file for each device in the first row of variables.csv
-                    $configfile = $folder + "\" + $templatefile.BaseName + "_config_" + $titles[$k] + $templatefile.Extension
+                    $configfile = $folder + "\configs\" + $templatefile.BaseName + "_config_" + $titles[$k] + $templatefile.Extension
                     Copy-Item -Path $templatefile -Destination $configfile -Force
                     
                     # grab the metadata variables
@@ -90,7 +92,7 @@ function main {
                         $col = $titles[$k]
                         $tag = "{{" + $meta.VARIABLES[$i] + "}}"
                         Write-Host ("Replace $tag in") $titles[$k] "with" $row.$col "."
-            
+                        # perform the replacement
                         ((Get-Content -Path $configfile) -replace [RegEx]::Escape("{{" + $row.VARIABLES + "}}"), ($meta.$col) ) | Set-Content -Path $configfile
                     }
 

@@ -2,9 +2,17 @@
 
 > sample `variables.csv` and `template.txt` located in [sample](./sample)
 
-1. Create a templates folder, ie `$HOME/network-templates`
+1. Suggested folder structure:
 
-1. Create a `template.txt` config file, (file extension does not matter, as long as it is a plaintext file)
+    ```text
+    $HOME/simple-network-templates/
+    └── project-name/
+        ├── configs/
+        ├── template.txt
+        └── variables.csv
+    ```
+
+2. Create a `template.txt` config file, (file extension does not matter, as long as it is a plaintext file)
    
     a. Encapsulate the data you want to replace in double curly braces, __{{LIKE SO}}__
 
@@ -18,7 +26,7 @@
     ip add {{VLAN1IP}} {{VLAN1MASK}}
     ```
 
-2. Create a `variables.csv` file in the same folder as your `template` file.
+3. Create a `variables.csv` file in the same folder as your `template` file.
 
 > It **must** be called `variables.csv`
 >
@@ -44,7 +52,7 @@ ex. variables.csv
 
 2. Drag and drop your template text file into the empty window, then click __START__.
 
-3. Your template will be applied to the devices listed in the variables file.  The files ending in `_config` are the generated config files. 
+3. Your template will be applied to the devices listed in the variables file.  The files ending in `_config` located in the `configs` folder are the generated config files. 
 
 4. To overwrite your changes, simply rerun with different values in your `variables.csv`.
 
