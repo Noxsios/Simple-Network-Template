@@ -1,5 +1,4 @@
 function main {
-
     [void] [System.Reflection.Assembly]::LoadWithPartialName("System.Windows.Forms")
     [void] [System.Reflection.Assembly]::LoadWithPartialName("System.Drawing")
 
@@ -17,7 +16,7 @@ function main {
     $iconBase64 = 'iVBORw0KGgoAAAANSUhEUgAAACQAAAAkCAYAAADhAJiYAAABA0lEQVR4Ae3YAQTCUBRG4fAQIEAIAUIIAUJAgBAAQgAYYAhDCBAAQoAQAgQIEABCCCEECCGEdfCCR65yt1vs54Or7JBBJcU1scQOQ5hvg9R7oIbXGujBIbelgdjfx0i9Q1ZRDhUhKPH3S3DvQ3V9nHHHXAh6c9fdPnhA2zpIfrBwF95KgyD5rTQJCu/xrwUlRVARVAT9S9AWicJdLUhHEfRFkMMMV2zQsgxyWAUfeGCOqkVQD+kbV8Qo5/2TRcIXjhjkGSRHweItiyyDLKOEIPuoBOIi8yAhyj7Ib5pD0AgfbZZxUAd+9lEnODCjKO1/RCZKITeMoLIu1rh/EbLHAvVSsCd0ANBznaxxuQAAAABJRU5ErkJggg=='
     $iconBytes = [Convert]::FromBase64String($iconBase64)
     $stream = New-Object IO.MemoryStream($iconBytes, 0, $iconBytes.Length)
-    $stream.Write($iconBytes, 0, $iconBytes.Length);
+    $stream.Write($iconBytes, 0, $iconBytes.Length)
     $form.Icon = [System.Drawing.Icon]::FromHandle((New-Object System.Drawing.Bitmap -Argument $stream).GetHIcon())
 
     # start button
@@ -69,17 +68,18 @@ function main {
             # Write-Host $folder
 
             if ($file -is [System.IO.DirectoryInfo]) {
-                Write-Host ("ERROR DIRECTORY")
-            } else {
+                Write-Host ("ERROR: DIRECTORY PROVIDED")
+            }
+            else {
                 # $configfile = $folder + "\" + $i.BaseName + $i.Extension
                 # Write-Host $configfile
                 $titles = ((Get-Content ($folder + "\variables.csv"))[0] -split ',')
+                # ignore the first element, which is always VARIABLES
                 $titles = $titles[1..$titles.Length]
 
-                Write-Host '------'
+                Write-Host "------"
 
-                for ( $k = 0; $k -lt $titles.Length; $k++ ) {
-
+                for ($k = 0; $k -lt $titles.Length; $k++) {
                     $configfile = $folder + "\" + $file.BaseName + "_config_" + $titles[$k] + $file.Extension
                     #Write-Host $titles[$k]
                     Copy-Item -Path $file -Destination $configfile -Force
@@ -88,15 +88,15 @@ function main {
                     $meta = Import-Csv ($folder + "\variables.csv")
 
                     for ($i = 0; $i -lt $meta.Count; $i++) {
-                        $meta_row = $meta[$i]
-                        $meta_col = $titles[$k]
-                        $tag_WORD = "{{" + $meta.WORD[$i] + "}}"
-                        Write-Host ("Replace $tag_WORD in") $titles[$k] "with" $meta_row.$meta_col "."
+                        $row = $meta[$i]
+                        $col = $titles[$k]
+                        $tag = "{{" + $meta.VARIABLES[$i] + "}}"
+                        Write-Host ("Replace $tag in") $titles[$k] "with" $row.$col "."
             
-                        ((Get-Content -path $configfile) -replace [RegEx]::Escape("{{" + $meta_row.WORD + "}}"), ($meta_row.$meta_col) ) | Set-Content -Path $configfile
+                        ((Get-Content -Path $configfile) -replace [RegEx]::Escape("{{" + $meta.VARIABLES + "}}"), ($meta.$col) ) | Set-Content -Path $configfile
                     }
 
-                    Write-Host '------'
+                    Write-Host "------"
 
                     $form_FormClosed
                     $form.Close()
@@ -146,4 +146,5 @@ function main {
     [void] $form.ShowDialog()
 }
 
-main()
+# call main function
+main

@@ -1,5 +1,5 @@
 config t
 
-hostname [[HOSTNAME]]
+hostname {{HOSTNAME}}
 int vlan 1
-ip add [[VLAN1IP]] [[VLAN1MASK]]
+ip add {{VLAN1IP}} {{VLAN1MASK}}
