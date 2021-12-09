@@ -1,15 +1,11 @@
-function dragndrop_template {
-
-    ### Sample showing a PowerShell GUI with drag-and-drop ###
+function main {
 
     [void] [System.Reflection.Assembly]::LoadWithPartialName("System.Windows.Forms")
     [void] [System.Reflection.Assembly]::LoadWithPartialName("System.Drawing")
 
     ### Create form ###
-
     $form = New-Object System.Windows.Forms.Form
     $form.Text = "Template Drag n Drop"
-    # $form.Size = New-Object System.Drawing.Size(150, 223)
     $form.Size = New-Object System.Drawing.Size(475, 195)
     $form.StartPosition = "CenterScreen"
     $form.MinimizeBox = $False
@@ -22,7 +18,7 @@ function dragndrop_template {
     $iconBytes = [Convert]::FromBase64String($iconBase64)
     $stream = New-Object IO.MemoryStream($iconBytes, 0, $iconBytes.Length)
     $stream.Write($iconBytes, 0, $iconBytes.Length);
-    $Form.Icon = [System.Drawing.Icon]::FromHandle((New-Object System.Drawing.Bitmap -Argument $stream).GetHIcon())
+    $form.Icon = [System.Drawing.Icon]::FromHandle((New-Object System.Drawing.Bitmap -Argument $stream).GetHIcon())
 
     ### Define controls ###
 
@@ -144,28 +140,19 @@ function dragndrop_template {
             $form.remove_FormClosed($Form_Cleanup_FormClosed)
         }
         catch [Exception]
-        { }
+        { 
+            "Exception thrown closing form." 
+        }
     }
 
-    ### Wire up events ###
-
+    # wire up events
     $button.Add_Click($button_Click)
     $listBox.Add_DragOver($listBox_DragOver)
     $listBox.Add_DragDrop($listBox_DragDrop)
     $form.Add_FormClosed($form_FormClosed)
 
-    #### Show form ###
-
+    # show form
     [void] $form.ShowDialog()
-
 }
 
-dragndrop_template
-
-<#
-Drag n Drop GUI derived from :
-
-https://github.com/rlv-dan/Tutorial-code/blob/master/A%20drag-and-drop%20GUI%20made%20with%20PowerShell/powershell-gui.ps1
-
-Find and Replace CSV functions made entirely by me!
-#>
+main()
