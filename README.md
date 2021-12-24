@@ -61,3 +61,9 @@ ex. variables.csv
 ## Credits
 
 Drag n Drop GUI derived from : [this](https://github.com/rlv-dan/Tutorial-code/blob/master/A%20drag-and-drop%20GUI%20made%20with%20PowerShell/powershell-gui.ps1)
+
+## Testing
+
+```powershell
+Invoke-Pester -Output Detailed .\cli.Tests.ps1
+```
