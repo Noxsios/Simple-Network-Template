@@ -7,7 +7,7 @@ BeforeAll {
 Describe 'Invoke-Simple-Network-Template' {
     It 'Given sample parameters, performs operation' {
         Invoke-SNT -TemplateFile ./sample_output/template_sample.txt
-        $configFiles = Get-ChildItem ./sample_output | Where-Object { $_.Name -Like '*_config_*' }
+        $configFiles = Get-ChildItem ./sample_output/configs | Where-Object { $_.Name -Like '*_config_*' }
         $configFiles.Count | Should -Be 2
     }
 }

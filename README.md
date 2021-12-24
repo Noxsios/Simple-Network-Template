@@ -28,19 +28,19 @@
 
 3. Create a `variables.csv` file in the same folder as your `template` file.
 
-> It **must** be called `variables.csv`
->
-> The *A1* entry **must** be `VARIABLES`
+    > It **must** be called `variables.csv`
+    >
+    > The *A1* entry **must** be `VARIABLES`
 
-ex. variables.csv
+    ex. variables.csv
 
-| VARIABLES | DEVICE1       | DEVICE2       |
-| --------- | ------------- | ------------- |
-| HOSTNAME  | router1       | router2       |
-| VLAN1IP   | 192.168.0.1   | 192.168.1.1   |
-| VLAN1MASK | 255.255.255.0 | 255.255.255.0 |
+    | VARIABLES | DEVICE1       | DEVICE2       |
+    | --------- | ------------- | ------------- |
+    | HOSTNAME  | router1       | router2       |
+    | VLAN1IP   | 192.168.0.1   | 192.168.1.1   |
+    | VLAN1MASK | 255.255.255.0 | 255.255.255.0 |
 
-1. Clone this repo, and run the gui
+4. Clone this repo, and run the gui
 
     ```powershell
     git clone https://github.com/Noxsios/Simple-Network-Template.git
@@ -50,11 +50,11 @@ ex. variables.csv
     & .\gui.ps1
     ```
 
-2. Drag and drop your template text file into the empty window, then click __START__.
+5. Drag and drop your template text file into the empty window, then click __START__.
 
-3. Your template will be applied to the devices listed in the variables file.  The files ending in `_config` located in the `configs` folder are the generated config files. 
+6. Your template will be applied to the devices listed in the variables file.  The files ending in `_config` located in the `configs` folder are the generated config files. 
 
-4. To overwrite your changes, simply rerun with different values in your `variables.csv`.
+7. To overwrite your changes, simply rerun with different values in your `variables.csv`.
 
 ---
 
